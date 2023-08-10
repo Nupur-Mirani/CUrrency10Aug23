@@ -1,0 +1,54 @@
+<html>
+
+<head>
+    <title> CC by Nupur Mirani</title>
+    <style>
+        * {
+            font-size: 60px;
+        }
+
+        h1 {
+            background-color: Black;
+            color: White;
+            border radius: 25%;
+            width: 50%;
+        }
+
+        body {
+            background-color: #adafba;
+        }
+    </style>
+    <script>
+        function convert() {
+            event.preventDefault();
+            let ans = document.getElementById("ans");
+            let amt = document.getElementById("amt");
+            let url = "https://api.exchangerate-api.com/v4/latest/USD";
+            fetch(url)
+                .then(res => res.json())
+                .then(data => {
+                    let dollar = data["rates"]["INR"]
+                    let amt_in_dollars = parseFloat(amt.value);
+                    let amt_in_ruppees = amt_in_dollars * dollar;
+                    ans.innerHTML = "\u20B9" + amt_in_ruppees.toFixed(2);
+                })
+                .catch(err => ans.innerHTML = "issue" + err);
+
+        }
+    </script>
+</head>
+
+<body>
+    <center>
+        <h1>CC Converter App</h1>
+        <form onsubmit="convert()">
+            <input type="number" step="any" placeholder="Enter amount in $$" id="amt" />
+            <br></br>
+            <input type="submit" Value="Convert" />
+        </form>
+        <h1 id="ans"></h1>
+    </center>
+
+</body>
+
+</html>
